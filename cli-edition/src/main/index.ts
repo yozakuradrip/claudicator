@@ -4,6 +4,7 @@ import { startPolling, onUpdate, refresh } from './usage/UsageService'
 import { initTray, updateTrayIcon, sendToPopup, openSettings } from './tray/TrayController'
 import { getSettings } from '@shared/main/settings/SettingsStore'
 import { applyAutoLaunch } from '@shared/main/startup/AutoLaunch'
+import { checkForUpdate } from '@shared/main/update/UpdateChecker'
 import { registerIpcHandlers } from './ipc/handlers'
 
 if (!app.requestSingleInstanceLock()) {
@@ -31,6 +32,14 @@ app.whenReady().then(async () => {
   await initAuth()
   startPolling()
   powerMonitor.on('resume', () => refresh())
+
+  // 起動時に1回だけ新バージョンを確認（通知のみ・自動更新なし）。失敗は無視される。
+  void checkForUpdate({
+    owner: 'yozakuradrip',
+    repo: 'claudicator',
+    channelPrefix: 'cli',
+    currentVersion: app.getVersion(),
+  })
 
   onUpdate((state) => {
     updateTrayIcon(state)

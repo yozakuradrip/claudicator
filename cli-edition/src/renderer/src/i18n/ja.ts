@@ -17,6 +17,8 @@ export const ja = {
   clickToRefresh: 'クリックして更新',
   refreshing: '更新中...',
   noData: 'データなし',
+  updateAvailable: '新しいバージョン {v} があります',
+  updateDownload: 'ダウンロード',
   loginRequired: 'ログインが必要です',
   error: 'エラー',
   rateLimited: '使用量の取得が一時的に制限されています。自動で再取得しますので操作は不要です。',

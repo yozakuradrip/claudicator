@@ -55,3 +55,9 @@ export interface AuthData {
   expiresAt: number
   email?: string
 }
+
+export interface UpdateInfo {
+  available: boolean
+  latestVersion?: string
+  url?: string
+}

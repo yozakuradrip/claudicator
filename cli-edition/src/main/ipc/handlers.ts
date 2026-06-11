@@ -3,10 +3,13 @@ import { getSettings, updateSettings, resetSettings } from '@shared/main/setting
 import { refresh, getState, restartPolling } from '../usage/UsageService'
 import { openSettings, updateTrayIcon, sendToPopup, sendSettingsToPopup, adjustWindowPosition } from '../tray/TrayController'
 import { applyAutoLaunch } from '@shared/main/startup/AutoLaunch'
+import { getCachedUpdateInfo } from '@shared/main/update/UpdateChecker'
 import type { Settings } from '@shared/main/types'
 
 export function registerIpcHandlers(): void {
   ipcMain.handle('app:version', () => app.getVersion())
+
+  ipcMain.handle('update:get', () => getCachedUpdateInfo())
 
   ipcMain.handle('usage:get', () => getState())
 

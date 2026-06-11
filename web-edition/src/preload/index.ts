@@ -1,9 +1,12 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { UsageState, Settings } from '@shared/main/types'
+import type { UsageState, Settings, UpdateInfo } from '@shared/main/types'
 
 const api = {
   getAppVersion: (): Promise<string> =>
     ipcRenderer.invoke('app:version'),
+
+  getUpdateInfo: (): Promise<UpdateInfo> =>
+    ipcRenderer.invoke('update:get'),
 
   getUsage: (): Promise<UsageState> =>
     ipcRenderer.invoke('usage:get'),

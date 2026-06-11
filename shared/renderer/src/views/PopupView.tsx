@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 import { UsageSection } from '../components/UsageSection'
+import { UpdateBanner } from '../components/UpdateBanner'
 import { getDict } from '@app/i18n'
-import type { UsageState, Settings } from '../../../main/types'
+import type { UsageState, Settings, UpdateInfo } from '../../../main/types'
 
 export function PopupView() {
   const [state, setState] = useState<UsageState>({ data: null, fetchedAt: null, error: null })
   const [settings, setSettings] = useState<Settings | null>(null)
   const [refreshing, setRefreshing] = useState(false)
+  const [update, setUpdate] = useState<UpdateInfo | null>(null)
   const rootRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.electronAPI.getSettings().then(setSettings)
     window.electronAPI.getUsage().then(setState)
+    window.electronAPI.getUpdateInfo().then(setUpdate)
 
     const unsubUsage = window.electronAPI.onUsageUpdate((s) => setState(s))
     const unsubSettings = window.electronAPI.onSettingsUpdate((s) => setSettings(s))
@@ -29,7 +32,7 @@ export function PopupView() {
     if (rootRef.current) {
       window.electronAPI.resizeWindow(rootRef.current.scrollHeight + 2)
     }
-  }, [state, settings])
+  }, [state, settings, update])
 
   const handleRefresh = async () => {
     if (refreshing) return
@@ -69,6 +72,16 @@ export function PopupView() {
             ⚙
           </button>
         </div>
+
+        {/* 新バージョン通知（あるときだけ表示） */}
+        {update?.available && update.url && update.latestVersion && (
+          <UpdateBanner
+            version={update.latestVersion}
+            url={update.url}
+            label={t.updateAvailable}
+            downloadLabel={t.updateDownload}
+          />
+        )}
 
         {/* Content */}
         <div className="px-4 pt-3 pb-1">

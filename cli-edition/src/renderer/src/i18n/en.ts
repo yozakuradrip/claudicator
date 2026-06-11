@@ -19,6 +19,8 @@ export const en: Dict = {
   clickToRefresh: 'Click to refresh',
   refreshing: 'Refreshing...',
   noData: 'No data',
+  updateAvailable: 'Version {v} is available',
+  updateDownload: 'Download',
   loginRequired: 'Login required',
   error: 'Error',
   rateLimited: 'Usage data is temporarily unavailable due to a request limit. No action needed — it will update automatically.',
