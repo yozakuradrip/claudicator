@@ -1,6 +1,6 @@
 {
   "name": "claudicator-web",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "productName": "Claudicator Web",
   "description": "Claude.ai 使用量トレイ (Web 版)",
   "main": "out/main/index.js",
